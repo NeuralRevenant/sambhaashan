@@ -1,0 +1,82 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <!-- <link rel="stylesheet" href="/css/product.css"> -->
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <div style="width: fit-content;padding: 5px 10px;margin: 10px auto;text-align:center;max-width:80%;border-color:rgb(150, 220, 20);background:rgb(239, 255, 168);">Info: Please fill the secretQuestion and answer fields carefully and note them down or save them somewhere for password resets. Without these you will not be able to use the forgot password option.</div>
+                <%if(errorMsg){%>
+                    <div style="width: fit-content;padding: 5px 10px;margin:auto;text-align:center;max-width:80%;border-color:crimson;background:rgb(255, 168, 168);"><%=errorMsg%></div>
+                <%}%>
+                <form class="login-form" action="/signup" method="POST" novalidate autocomplete="off">
+                    <div class="form-control">
+                        <label for="email">E-Mail</label>
+                        <input 
+                        class="<%=validationErrors.find(err => err.param === 'email')?'invalid':''%>"
+                        type="email" 
+                        name="email" 
+                        id="email" 
+                        value="<%=oldData.email%>">
+                    </div>
+                    <div class="form-control">
+                        <label for="username">Username</label>
+                        <input 
+                        class="<%=validationErrors.find(err => err.param === 'username')?'invalid':''%>"
+                        type="text"
+                        name="username" 
+                        id="username"
+                        value="<%=oldData.username%>" >
+                    </div>
+                    <div class="form-control">
+                        <label for="password">Password</label>
+                        <input 
+                        class="<%=validationErrors.find(err => err.param === 'password')?'invalid':''%>"
+                        type="password" 
+                        name="password" 
+                        id="password" 
+                        value="<%=oldData.password%>">
+                    </div>
+                    <div style="margin-bottom: 1.3rem;">
+                        <input type="checkbox" id="show-password">
+                        Show Password
+                    </div>
+                    <div class="form-control">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input 
+                        class="<%=validationErrors.find(err => err.param === 'confirmPassword')?'invalid':''%>"
+                        type="password" 
+                        name="confirmPassword" 
+                        id="confirmPassword" 
+                        value="<%=oldData.confirmPassword%>">
+                    </div>
+                    <div class="form-control">
+                        <label for="secretQuestion">secretQuestion</label>
+                        <input 
+                        class="<%=validationErrors.find(err => err.param === 'secretQuestion')?'invalid':''%>"
+                        type="text" 
+                        name="secretQuestion" 
+                        id="secretQuestion" 
+                        value="<%=oldData.secretQuestion%>">
+                    </div>
+                    <div class="form-control">
+                        <label for="answer">Answer</label>
+                        <input 
+                        class="<%=validationErrors.find(err => err.param === 'answer')?'invalid':''%>"
+                        type="password" 
+                        name="answer" 
+                        id="answer" 
+                        value="<%=oldData.answer%>">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="checkbox" id="show-answer">
+                        Show Answer
+                    </div>
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                    <button class="btn" type="submit">Signup</button>
+                </form>
+            </main>
+            <%- include('../includes/end.ejs') %>

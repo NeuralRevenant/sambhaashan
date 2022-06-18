@@ -1,0 +1,55 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    </head>
+
+    <body style="background: linear-gradient(to bottom, #ffcc99 0%, #ff99cc 100%); height:100vh;">
+        <%- include('../includes/navigation.ejs') %>
+            <main class="centered">
+                <%if(post){%>
+                    <h1 class="h1 gradient-text1">
+                        Creator: <%=post.userId.username%>
+                    </h1>
+                    <h1 style="color: aliceblue;">
+                        <%=post.title%>
+                    </h1>
+                    <%if(isUserPost){%>
+                        <a href="/admin/edit-post/<%=post._id%>?edit=true" class="btn">Edit</a>
+                        <form action="/admin/delete-post" method="POST">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <input type="hidden" value="<%=post._id%>" name="postId">
+                            <button class="btn" type="submit">Delete</button>
+                        </form>
+                    <%}%>
+                    <hr>
+                    <%if(filetype?.split('/')[0]==='video'){%>
+                        <div style="text-align: center;">
+                            <video width="320" height="240" controls id="video">
+                                <source src="/<%=post.filePath%>" type="<%=filetype%>">
+                            </video>
+                        </div>    
+                    <%}%>
+                    <%if(filetype?.split('/')?.[0]==='image'){%>
+                        <div>
+                            <img src="/<%=post.filePath%>" alt="<%=post.title%>" style="border-radius: 1rem;" class="just__img">
+                        </div>
+                    <%}%>
+                    <%if(filetype?.split('/')?.[0]==='audio'){%>
+                        <div>
+                            <button id="replay" type="button" class="btn">Replay</button>
+                        </div>
+                    <%}%>
+                    <p style="font-size: larger;">
+                        <%=post.description%>
+                    </p>
+                    <%if(filetype?.split('/')[0]==='audio'){%>
+                        <audio id="music">
+                            <source id="p1" src="/<%=post.filePath%>" type="<%=filetype%>">
+                        </audio>
+                    <%}%>
+                    
+                <%} else{%>
+                    <h1 style="color: aliceblue;">No Such Post!</h1>
+                <%}%>
+            </main>
+        <%- include('../includes/end.ejs') %>

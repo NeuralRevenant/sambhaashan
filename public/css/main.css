@@ -1,0 +1,455 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.centered {
+    text-align: center;
+}
+
+main {
+    padding: 1rem;
+    margin: auto;
+}
+
+form {
+    display: inline;
+}
+
+.main-header {
+    width: 100%;
+    height: 3.5rem;
+    /* background: linear-gradient(to top, #ff66ff 0%, #3366ff 100%); */
+    background: linear-gradient(to right, #6666ff 0%, #99ccff 100%);
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.main-header__nav {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-header__item-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.main-header__item {
+    margin: 0 1rem;
+    padding: 0;
+}
+
+.main-header__item a {
+    text-decoration: none;
+    color: white;
+}
+
+.main-header__item a:hover, .main-header__item a:active, .main-header__item a.active {
+    color: #3bffbe;
+}
+
+.mobile-nav {
+    width: 30rem;
+    height: 100vh;
+    max-width: 90%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    border: 3px groove whitesmoke;
+    /* border-style: groove; */
+    background: linear-gradient(to right, #ffcccc 0%, #ffff99 100%);
+    z-index: 10;
+    padding: 2rem 1rem 1rem 2rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+}
+
+.mobile-nav.open {
+    transform: translateX(0);
+}
+
+.mobile-nav__item-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-nav__item {
+    margin: 1rem;
+    padding: 0;
+}
+
+.mobile-nav__item a {
+    text-decoration: none;
+    color: black;
+    font-size: 1.5rem;
+    padding: 0.5rem 2rem;
+}
+
+.mobile-nav__item .logbtn {
+    color: black;
+    font-size: 1.5rem;
+    padding: 0.5rem 2rem;
+    background-color: white;
+}
+
+.mobile-nav__item a:active, .mobile-nav__item a:hover, .mobile-nav__item a.active {
+    background: #3bffbe;
+    color: white;
+    border-radius: 3px;
+}
+
+.mobile-nav__item .logbtn:active, .mobile-nav__item .logbtn:hover, .mobile-nav__item .logbtn:active {
+    background: #3bffbe;
+    color: white;
+    border-radius: 3px;
+}
+
+#side-menu-toggle {
+    border: 1px solid white;
+    font: inherit;
+    padding: 0.5rem;
+    display: block;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+#side-menu-toggle:focus {
+    outline: none;
+}
+
+#side-menu-toggle:active, #side-menu-toggle:hover {
+    color: #3bffbe;
+    border-color: #3bffbe;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+    display: none;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: stretch;
+}
+
+.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.card__header, .card__content {
+    padding: 1rem;
+}
+
+.card__header h1, .card__content h1, .card__content h2, .card__content p {
+    margin: 0;
+}
+
+.card__image {
+    width: 100%;
+}
+
+.card__image img {
+    width: 100%;
+}
+
+.card__actions {
+    padding: 1rem;
+    text-align: center;
+}
+
+.card__actions button, .card__actions a {
+    margin: 0 0.25rem;
+}
+
+.imgbtn {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    text-decoration: none;
+    font: inherit;
+    border: 1px solid white;
+    /* color: #00695c; */
+    /* background: white; */
+    border-radius: 3px;
+    cursor: pointer;
+    background: linear-gradient(to top, #ffcc99 0%, #ff99cc 100%);
+    color: white;
+}
+
+.imgbtn:hover, .imgbtn:active {
+    background: linear-gradient(to bottom, #ffcc99 0%, #ff99cc 100%);
+    color: white;
+}
+
+/* now begins auto-complete */
+
+.autocomplete {
+    /*the container must be positioned relative:*/
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 25rem;
+    margin-right: 0.5rem;
+}
+
+/* usernames start here */
+
+/* #username {
+    border-style: groove;
+    background-color: #5059df;
+    padding: 10px;
+    font-size: 16px;
+} */
+
+#username[type=text] {
+    background-color: white;
+    width: 100%;
+}
+
+#username[type=submit] {
+    background-color: DodgerBlue;
+    color: #fff;
+}
+
+/* usernames end here */
+
+/* rmsgs start here */
+
+#search-box-rmsg {
+    /* border: 2px groove black; */
+    /* border-radius: 1px; */
+    border-style: groove;
+    background-color: #5059df;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#search-box-rmsg[type=text] {
+    background-color: white;
+    width: 100%;
+}
+
+#search-box-rmsg[type=submit] {
+    background-color: DodgerBlue;
+    color: #fff;
+}
+
+/* rmsgs end here */
+
+/* smsgs start here */
+
+#search-box-smsg {
+    /* border: 2px groove black; */
+    /* border-radius: 1px; */
+    border-style: groove;
+    background-color: #5059df;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#search-box-smsg[type=text] {
+    background-color: white;
+    width: 100%;
+}
+
+#search-box-smsg[type=submit] {
+    background-color: DodgerBlue;
+    color: #fff;
+}
+
+/* smsgs end here */
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete-items div:hover {
+    /*when hovering an item:*/
+    background-color: #e9e9e9;
+}
+
+.autocomplete-active {
+    /*when navigating through the items using the arrow keys:*/
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
+
+/* auto-complete code ends here */
+
+.imgbtn-send-many-pg {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    text-decoration: none;
+    font: inherit;
+    border: 1px solid white;
+    /* color: #00695c; */
+    /* background: white; */
+    border-radius: 3px;
+    cursor: pointer;
+    background: linear-gradient(to top, #99dfff 0%, #a97bff 100%);
+    color: white;
+}
+
+.imgbtn-send-many-pg:hover, .imgbtn-send-many-pg:active {
+    background: linear-gradient(to bottom, #99dfff 0%, #a97bff 100%);
+    color: white;
+}
+
+.gradient-text {
+    /* Fallback: Set a background color. */
+    background-color: #6c36d8;
+    /* Create the gradient. */
+    background-image: linear-gradient( 45deg, #0a4234 50%, #f2cfed 50%);
+    /* Set the background size and repeat properties. */
+    background-size: 270%;
+    background-repeat: repeat;
+    background-position: top right;
+    background-clip: border-box;
+    /* Use the text as a mask for the background. */
+    /* This will show the gradient as a text color rather than element bg. */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    animation: button-animation 0.65s 0.15s ease-out forwards;
+}
+
+.btn1:hover, .btn1:hover span {
+    animation: button-animation-rev 0.65s ease-out forwards;
+}
+
+.btn1:hover {
+    box-shadow: 3px 2px 10px 1px rgba(0, 0, 0, 0.15);
+    transition: 0.5s;
+}
+
+@keyframes button-animation {
+    0% {
+        background-position: top right;
+    }
+    100% {
+        background-position: top left;
+    }
+}
+
+@keyframes button-animation-rev {
+    0% {
+        background-position: top left;
+    }
+    100% {
+        background-position: top right;
+    }
+}
+
+/* Style the rest of the page. */
+
+body {
+    background-color: #fcfdfc;
+}
+
+.btn1 {
+    margin-top: 1em;
+    /* margin-top: 20px; */
+    margin-left: auto;
+    margin-right: auto;
+    background-image: linear-gradient(45deg, #f2cfed 50%, #27b491 50%);
+    background-size: 270%;
+    background-repeat: repeat;
+    background-position: top right;
+    animation: button-animation 0.65s 0.15s ease-out forwards;
+    /* display: table; */
+    border-radius: 0.5em;
+    text-decoration: none;
+    box-shadow: 7px 4px 20px 1px rgba(0, 0, 0, 0.15);
+    padding: 1.5em 0;
+    cursor: pointer;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    text-decoration: none;
+    font: inherit;
+    border: 1px solid #00695c;
+    color: #00695c;
+    background: white;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn:hover, .btn:active {
+    background-color: #00695c;
+    color: white;
+}
+
+.pagination {
+    margin: 2rem;
+    text-align: center;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #00695c;
+    padding: 0.5rem;
+    border: 1px solid #00695c;
+    margin: 0 1rem;
+}
+
+.pagination a:hover, .pagination a:active, .pagination a.active {
+    background: #00695c;
+    color: white;
+}
+
+@media (min-width: 1030px) {
+    .main-header__nav {
+        display: flex;
+    }
+    #side-menu-toggle {
+        display: none;
+    }
+}
+
+@media(max-width:1030px) {
+    .main-header__nav {
+        display: none;
+    }
+}

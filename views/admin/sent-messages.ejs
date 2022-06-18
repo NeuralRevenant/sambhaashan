@@ -1,0 +1,103 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+
+                <div class="grid">
+                    <article class="card product-item" style="box-shadow: none;z-index:unset;margin-top: 0;margin-bottom:0; padding:0;width:fit-content;">
+                        <div class="card__actions">
+                            <a href="/admin/received-messages" class="imgbtn" style="border-radius: 20px;">Received Messages</a>
+                            <a href="/admin/send-messages" class="imgbtn" style="border-radius: 20px;">Send to Many</a>
+                        </div>
+                    </article>
+                </div>
+
+                <% if (msgs?.length>0||false) { %>
+                    <form method="POST" action="/admin/filter-sent-messages" autocomplete="off">
+                        <div style="height: 3rem;display: flex;align-items: center;justify-content: center;margin-bottom: 1rem;">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <div class="autocomplete">
+                                <input type="text" id="search-box-smsg" name="filter" placeholder="filter by title of the msg" style="height: 1.8rem;width:100%;max-width:25rem;margin-right:1rem;" value="">
+                            </div>
+                            <button class="btn" type="submit" id="search-btn-smsg">Search</button>
+                        </div>
+                    </form>
+                    <div style="text-align: center;">
+                        <h1>Sent Messages</h1>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <form action="/admin/clear-sent-messages" method="POST">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <button class="imgbtn" type="submit" style="border-radius: 20px;margin-bottom:15px;">Clear All</button>
+                        </form>
+                    </div>
+                    
+                    <div class="grid">
+                        <% for (let msg of msgs) { %>
+                            
+                                    <article class="card product-item" style="background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);">
+                                        <header class="card__header" style="margin-bottom: 0;padding-bottom:0;">
+                                            <h1 class="product__title" style="color:aliceblue">
+                                                Sent to: <%= msg.toId.username %>
+                                            </h1>
+                                        </header>
+    
+                                        <div class="card__content" style="padding-bottom:0;padding-top:0;margin-top:5px">
+                                            <p class="product__description" style="color:rgb(255, 0, 128);font-size: 1.2rem;font-weight:700">
+                                                <%=msg.message.title%>
+                                            </p> 
+                                        </div>
+
+                                        <div class="card__content" style="padding-bottom:0;padding-top:0;margin-top:5px">
+                                            <%if(msg.toId.isOnline){%>
+                                                <p class="product__description" style="color:rgb(0, 255, 149);font-size: 1rem;font-weight:700">
+                                                    <%=msg.toId.isOnline?'online': 'offline'%>
+                                                </p>
+                                            <%}else{%>
+                                                <p class="product__description" style="color:rgb(255, 0, 64);font-size: 1rem;font-weight:700">
+                                                    <%=msg.toId.isOnline?'online':'offline'%>
+                                                </p>
+                                            <%}%>
+                                        </div>
+
+                                        <div class="card__actions">
+                                            <a href="/admin/sent-messages/<%=msg._id%>" class="imgbtn">Check</a>
+                                            <form action="/admin/delete-sent-message" method="POST">
+                                                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                                <input type="hidden" value="<%=msg._id%>" name="msgId">
+                                                <button class="imgbtn" type="submit">Delete</button>
+                                            </form>
+                                        </div>
+                                        
+                                    </article>
+                        <%}%>
+                    </div>
+                    <%if(!filter){%>
+                        <section class="pagination">
+                            <%if(hasPreviousPage) {%>
+                                <a href="/admin/sent-messages/?page=<%=previousPage%>">
+                                    <%=previousPage%>
+                                </a>
+                                <%}%>
+                                <a href="/admin/sent-messages/?page=<%=currentPage%>" class="active">
+                                    <%=currentPage%>
+                                </a>
+                                <%if(hasNextPage){%>
+                                    <a href="/admin/sent-messages/?page=<%=nextPage%>">
+                                        <%=nextPage%>
+                                    </a>
+                                <%}%>
+                        </section>
+                    <%}%>
+                <% } else if(filter) { %>
+                    <h1 style="text-align: center;">No Such Message with the given title</h1>
+                <% } else { %>
+                    <h1 style="text-align: center;">No Sent Messages!</h1>
+                <% } %>
+            </main>
+            <%- include('../includes/end.ejs') %>

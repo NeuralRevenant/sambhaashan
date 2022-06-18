@@ -1,0 +1,8 @@
+<%- include('includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('includes/navigation.ejs') %>
+    <h1 style="text-align: center;text-shadow: 1px 1px 1px silver"><%if(errorMsg.startsWith('You can only use')){%><%="Today's limit reached."%><%}else{%>Error<%}%></h1>
+    <h1 style="text-align: center;color: rgb(255, 0, 93);text-shadow: 1px 1px 1px rgb(184, 255, 215);"><%=errorMsg%></h1>
+<%- include('includes/end.ejs') %>

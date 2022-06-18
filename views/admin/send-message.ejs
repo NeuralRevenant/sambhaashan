@@ -1,0 +1,35 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/animate.css">
+</head>
+
+<body style="background: linear-gradient(to top, #ffcc99 0%, #ff99cc 100%); height:100vh">
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <%if(errorMsg){%>
+            <div style="width: fit-content;padding: 5px 10px;margin:auto;text-align:center;max-width:80%;border:1px solid white ;background:crimson;color: white;">Error: <%=errorMsg%></div>
+        <%}%>
+        <div class="centered">
+            <h1 class="h1 gradient-text1">
+                Messaging: <%=username%>
+            </h1>
+        </div>
+        <form class="product-form" method="POST" action="/admin/send-message" novalidate autocomplete="off">
+            <div class="form-control">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" value="<%=title%>" placeholder="Ex: testing123">
+            </div>
+            <div class="form-control">
+                <label for="message">Message</label>
+                <textarea name="message" id="message" rows="5" placeholder="Please ensure the message is not longer than 150 chars."><%=message%></textarea>
+            </div>
+            
+            <input type="hidden" name="username" value="<%=username%>">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+            <input type="hidden" name="userId" value="<%=userId%>">
+            <button class="btn" type="submit">Send Message</button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>

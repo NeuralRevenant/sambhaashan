@@ -1,0 +1,82 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <% if (friends?.length>0??false) { %>
+                    <form method="POST" action="/admin/filter-friends" autocomplete="off">
+                        <div style="height: 3rem;display: flex;align-items: center;justify-content: center;margin-bottom: 1rem;">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <div class="autocomplete">
+                                <input type="text" id="search-box-frnds" name="filter" placeholder="filter by username" style="height: 1.8rem;width:100%;max-width:25rem;margin-right:1rem;" value="">
+                            </div>
+                            <button class="btn" id="search-btn-frnds" type="submit">Search</button>
+                        </div>
+                    </form>
+                    <div class="grid">
+                        <% for (let friend of friends) { %>
+                            
+                                    <article class="card product-item" style="background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);">
+                                        <header class="card__header" style="margin-bottom: 0;padding-bottom:0;">
+                                            <h1 class="product__title" style="color:aliceblue">
+                                                <%= friend.username %>
+                                            </h1>
+                                        </header>
+    
+                                        <div class="card__content">
+                                            <p class="product__description t" style="color:rgb(255, 0, 128);">
+                                                <%=friend.email%>
+                                            </p> 
+                                        </div>
+
+                                        <div class="card__content" style="padding-bottom:0;padding-top:0;">
+                                            <%if(friend.isOnline){%>
+                                                <p class="product__description" style="color:rgb(0, 255, 149);font-size: 1rem;font-weight:700">
+                                                    <%=friend.isOnline?'online': 'offline'%>
+                                                </p>
+                                            <%}else{%>
+                                                <p class="product__description" style="color:rgb(255, 0, 64);font-size: 1rem;font-weight:700">
+                                                    <%=friend.isOnline?'online':'offline'%>
+                                                </p>
+                                            <%}%>
+                                        </div>
+
+                                        <div class="card__actions">
+                                            <a href="/admin/send-message/<%=friend._id%>" class="imgbtn">Message</a>
+                                            <form action="/admin/delete-friend" method="POST">
+                                                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                                <input type="hidden" value="<%=friend._id%>" name="friendId">
+                                                <button class="imgbtn" type="submit">Delete</button>
+                                            </form>
+                                        </div>
+                                        
+                                    </article>
+                        <%}%>
+                    </div>
+                    <%if(!filter){%>
+                        <section class="pagination">
+                                <%if(hasPreviousPage) {%>
+                                    <a href="/admin/friends/?page=<%=previousPage%>">
+                                        <%=previousPage%>
+                                    </a>
+                                <%}%>
+                                    <a href="/admin/friends/?page=<%=currentPage%>" class="active">
+                                        <%=currentPage%>
+                                    </a>
+                                <%if(hasNextPage){%>
+                                    <a href="/admin/friends/?page=<%=nextPage%>">
+                                        <%=nextPage%>
+                                    </a>
+                                <%}%>
+                        </section>
+                    <%}%>
+                <% } else if(filter) { %>
+                    <h1>You have no such friend.</h1>
+                <% } else { %>
+                    <h1>No Friends!</h1>
+                <% } %>
+            </main>
+            <%- include('../includes/end.ejs') %>

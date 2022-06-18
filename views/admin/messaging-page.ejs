@@ -1,0 +1,44 @@
+<%- include('../includes/head.ejs') %>
+        <link rel="stylesheet" href="/css/forms.css">
+        <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body style="background: linear-gradient(to top, #ffcc99 0%, #ff99cc 100%); height:100vh">
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+
+                <div class="grid">
+                    <article class="card product-item" style="box-shadow: none;z-index:unset;margin-top: 0;margin-bottom:0; padding:0;width:fit-content;">
+                        <div class="card__actions">
+                            <a href="/admin/received-messages" class="imgbtn-send-many-pg" style="border-radius: 20px;">Received Messages</a>
+                            <a href="/admin/sent-messages" class="imgbtn-send-many-pg" style="border-radius: 20px;">Sent Messages</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div style="width: fit-content;padding: 5px 10px;margin: 10px auto;text-align:center;max-width:80%;border-color:rgb(150, 220, 20);background:rgb(239, 255, 168);">Info: Please seperate the email-Ids with ',' or commas.</div>
+                <%if(errorMsg){%>
+                    <div style="width: fit-content;padding: 5px 10px;margin:auto;text-align:center;max-width:80%;border:1px solid white ;background:crimson;color: white;">Error: <%=errorMsg%></div>
+                <%}%>
+                <form class="product-form" action="/admin/send-messages" method="POST" novalidate autocomplete="off">
+                    <div class="form-control">
+                        <label for="emailIds">Email-Ids</label>
+                        <textarea name="emailIds" id="emailIds" rows="5" placeholder="Ex: test1@yahoo.com, test2@gmail.com"><%=emailIds%></textarea>
+                    </div>
+        
+                    <div class="form-control">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" id="title" value="<%=title%>" placeholder="Ex: Testing123">
+                    </div>
+        
+                    <div class="form-control">
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" rows="5" placeholder="Please ensure the message is not longer than 150 chars."><%=message%></textarea>
+                    </div>
+        
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                    <button class="btn" type="submit" style="margin-top: 1rem;">Send Message</button>
+                </form>
+            </main>
+            <%- include('../includes/end.ejs') %>

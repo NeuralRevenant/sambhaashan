@@ -1,0 +1,106 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <% if (posts.length > 0) { %>
+                    <form method="POST" action="/filter-posts" autocomplete="off">
+                        <div style="height: 3rem;display: flex;align-items: center;justify-content: center;margin-bottom: 1rem;">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <div class="autocomplete">
+                                <input id="search-box-uposts" type="text" name="filter" placeholder="filter by title" style="height: 1.8rem;width:100%;max-width:25rem;margin-right:1rem;" value="">
+                            </div>
+                            <button class="btn" id="search-btn-uposts" type="submit">Search</button>
+                        </div>
+                    </form>
+                    <div class="grid">
+                        <% for (let post of posts) { %>
+                            <%if(post.fileType?.split('/')[0]=='audio'){%>
+                                <article class="card product-item" style="background-image: url('../../files/audio_bg.jpeg'); height:fit-content; border-radius: 4rem;">
+                                    <div class="card__content" style="padding-bottom:0; margin-top: 10px;">
+                                        <h1 class="product__title" style="color: white;">
+                                            <%= post.title %>
+                                        </h1>
+                                        <%if(post.description.length>11){%>
+                                            <p class="product__description" style="color:rgb(255, 0, 128);font-size: 1.2rem;font-weight:700">
+                                                <%=post.description.slice(0,11)%> ...
+                                            </p>
+                                        <%}else{%>
+                                            <p class="product__description" style="color:rgb(255, 0, 128);font-size: 1.2rem;font-weight:700;margin-top: 10px;">
+                                                <%=post.description%>
+                                            </p>
+                                        <%}%>
+                                    </div>
+                                    <div class="card__actions" style="margin-bottom: 0;padding-bottom:0;">
+                                        <a href="/admin/edit-post/<%=post._id%>?edit=true" class="btn btn1"><span class="gradient-text">Edit</span></a>
+                                        <form action="/admin/delete-post" method="POST">
+                                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                            <input type="hidden" value="<%=post._id%>" name="postId">
+                                            <button class="btn" type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                    <div style="text-align: center;margin-bottom:2rem;">
+                                        <a href="/posts/<%=post._id%>" class="btn btn1"><span class="gradient-text">Check Out</span></a>
+                                    </div>
+                                </article>
+                            <%} else {%>
+                                    <article class="card product-item" style="background: linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%);">
+                                        <header class="card__header" style="margin-bottom: 0;padding-bottom:0; margin-top: 10px;">
+                                            <h1 class="product__title" style="color:aliceblue">
+                                                <%= post.title %>
+                                            </h1>
+                                        </header>
+    
+                                        <div class="card__content" style="padding-bottom:0;padding-top:0;margin-top:10px;">
+                                            <%if(post.description.length>11){%>
+                                                <p class="product__description" style="color:rgb(255, 0, 128);font-size: 1.2rem;font-weight:700">
+                                                    <%=post.description.slice(0,11)%> ....
+                                                </p>
+                                            <%}else{%>
+                                                <p class="product__description" style="color:rgb(255, 0, 128);font-size: 1.2rem;font-weight:700">
+                                                    <%=post.description%>
+                                                </p>
+                                            <%}%>
+                                        </div>
+                                        <div class="card__actions">
+                                            <a href="/admin/edit-post/<%=post._id%>?edit=true" class="imgbtn">Edit</a>
+                                            <form action="/admin/delete-post" method="POST">
+                                                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                                <input type="hidden" value="<%=post._id%>" name="postId">
+                                                <button class="imgbtn" type="submit">Delete</button>
+                                            </form>
+                                        </div>
+                                        <div style="text-align: center;margin-bottom:2rem;">
+                                            <a href="/posts/<%=post._id%>" class="imgbtn">Check Out</a>
+                                        </div>
+                                    </article>
+                            <%}%>
+                        <%}%>
+                    </div>
+                    <%if(!filter){%>
+                        <section class="pagination">
+                            <%if(hasPreviousPage) {%>
+                                <a href="/?page=<%=previousPage%>">
+                                    <%=previousPage%>
+                                </a>
+                            <%}%>
+                            <a href="/?page=<%=currentPage%>" class="active">
+                                <%=currentPage%>
+                            </a>
+                            <%if(hasNextPage){%>
+                                <a href="/?page=<%=nextPage%>">
+                                    <%=nextPage%>
+                                </a>
+                            <%}%>
+                        </section>
+                    <%}%>
+                <% } else if (filter) { %>
+                    <h1>No such post.</h1>
+                <% } else { %>
+                    <h1>No posts from you!</h1>
+                <% } %>
+            </main>
+            <%- include('../includes/end.ejs') %>

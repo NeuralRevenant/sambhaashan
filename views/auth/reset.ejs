@@ -1,0 +1,39 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <!-- <link rel="stylesheet" href="/css/product.css"> -->
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <div style="width: fit-content;padding: 5px 10px;margin: 10px auto;text-align:center;max-width:80%;border-color:rgb(150, 220, 20);background:rgb(239, 255, 168);">
+                    Info: Keep in mind that you can use the forgot password option only once every 24 hrs.
+                </div>
+                <%if(errorMsg){%>
+                    <div style="width: fit-content;padding: 5px 10px;margin:auto;text-align:center;max-width:80%;border-color:crimson;background:rgb(255, 168, 168);"><%=errorMsg%></div>
+                <%}%>
+                <form class="login-form" action="/reset" method="POST" novalidate autocomplete="off">
+                    <div class="form-control">
+                        <label for="email">E-Mail</label>
+                        <input type="email" name="email" id="email" value="<%=email%>">
+                    </div>
+                    <div class="form-control">
+                        <label for="question">Secret Question</label>
+                        <input type="text" name="question" id="question" value="<%=question%>">
+                    </div>
+                    <div class="form-control">
+                        <label for="answer">Answer</label>
+                        <input type="password" name="answer" id="answer" value="<%=answer%>">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="checkbox" id="show-answer">
+                        Show Answer
+                    </div>
+                    
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                    <button class="btn" type="submit">Reset Password</button>
+                </form>
+            </main>
+            <%- include('../includes/end.ejs') %>

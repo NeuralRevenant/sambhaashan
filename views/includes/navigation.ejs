@@ -1,0 +1,98 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <%if(isAuthenticated){%>
+                <li class="main-header__item">
+                    <a class="<%= path === '/' ? 'active' : '' %>" href="/">Your Posts</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/add-post' ? 'active' : '' %>" href="/admin/add-post">
+                        Create Post
+                    </a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/all-posts' ? 'active' : '' %>" href="/all-posts">All Posts</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/add-friend' ? 'active' : '' %>" href="/admin/add-friend">Add a Friend</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/friends' ? 'active' : '' %>" href="/admin/friends">Friends</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/requests' ? 'active' : '' %>" href="/admin/requests">Requests</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= (path === '/admin/received-messages')||(path === '/admin/sent-messages')||(path === '/admin/send-messages') ? 'active' : '' %>" href="/admin/received-messages">Messages</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/settings' ? 'active' : '' %>" href="/admin/settings">Settings</a>
+                </li>
+            <%}%>
+        </ul>
+        <ul class="main-header__item-list">
+            <%if(!isAuthenticated){%>
+            <li class="main-header__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+            </li>
+            <%}%>
+            <%if(isAuthenticated){%>
+            <li class="main-header__item">
+                <form action="/logout" method="POST">
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+            <%}%>
+        </ul>
+    </nav>
+
+<nav class="mobile-nav" style="padding: 10px;text-align:center;">
+    <ul class="mobile-nav__item-list">
+        <%if(isAuthenticated){%>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/" style="font-size:large;">Your Posts</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/admin/add-post' ? 'active' : '' %>" href="/admin/add-post" style="font-size:large;">Create Post</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/all-posts' ? 'active' : '' %>" href="/all-posts" style="font-size:large;">All Posts</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/admin/add-friend' ? 'active' : '' %>" href="/admin/add-friend" style="font-size:large;">Add a Friend</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/admin/friends' ? 'active' : '' %>" href="/admin/friends" style="font-size:large;">Friends</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/admin/requests' ? 'active' : '' %>" href="/admin/requests" style="font-size:large;">Requests</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= (path === '/admin/received-messages')||(path === '/admin/sent-messages')||(path === '/admin/send-messages') ? 'active' : '' %>" href="/admin/received-messages" style="font-size:large;">Messages</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/admin/settings' ? 'active' : '' %>" href="/admin/settings" style="font-size:large;">Settings</a>
+            </li>
+            <form action="/logout" method="POST">
+                <li class="mobile-nav__item">
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                    <button type="submit" class="logbtn" style="font-size:large;">Logout</button>
+                </li>
+            </form>
+        <%} else {%>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+            </li>
+        <%}%>
+    </ul>
+</nav>
+</header>

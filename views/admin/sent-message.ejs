@@ -1,0 +1,32 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    </head>
+
+    <body style="background: linear-gradient(to top, #ffcc99 0%, #ff99cc 100%); height:100vh">
+        <%- include('../includes/navigation.ejs') %>
+            <main class="centered">
+                <%if(msg){%>
+                    <h1 style="color: aliceblue;">
+                        Sent To: <%=msg.toId.username%>
+                    </h1>
+                    <h1 style="color:antiquewhite;">
+                        <%=msg.toId.email%>
+                    </h1>
+                    <h1 style="color: rgb(117, 211, 255);text-shadow:1px 1px 1px white">
+                        <%=msg.message.title%>
+                    </h1>
+                    <form action="/admin/delete-sent-message" method="POST">
+                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                        <input type="hidden" value="<%=msg._id%>" name="msgId">
+                        <button class="btn" type="submit">Delete</button>
+                    </form>
+                    <hr>
+                    <p style="font-size: larger;">
+                        <%=msg.message.text%>
+                    </p>
+                <%} else{%>
+                    <h1 style="color: aliceblue;">No Such Message!</h1>
+                <%}%>
+            </main>
+        <%- include('../includes/end.ejs') %>
